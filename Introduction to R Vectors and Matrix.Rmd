@@ -1,0 +1,657 @@
+---
+title: "Vectors and Matrix"
+author: "Eralda Gjika"
+date: "1/5/2022"
+output:
+  html_document:
+    df_print: paged
+---
+
+Instructions: Ctrl+Alt+I how to Create a chunk
+
+```{r}
+3+5
+log(8)+sin(pi)
+```
+
+```{r}
+
+```
+
+# Start
+
+In this material you will have the opportunity to learn and test your self with: R basics, data structures, vectors, matrices and dataframe. As well as the fundamentals of R programming: Control structures and writing functions.
+
+##### How to use Help? 
+
+You can start by typing for example if you want info about "statistics" use:
+
+??statistics 
+
+or
+
+help.search(stat)
+
+
+Otherwise you can use the Help menu in R or Rstudio.
+#### Operators
+
+##### Arithmetic and Logic
+
+###### Arithmetic
+
+**addition +**
+
+**subtraction -**
+
+**multiplication * **
+
+**division /**
+
+ 
+#### Logic:
+
+**< less than**
+
+**> greater than**
+
+**<= less than or equal**
+
+**>= greater than or equal**
+
+**== equivalent**
+
+**!= different**
+
+ 
+#### Example
+```{r}
+10-8
+3+5
+4+6*2
+1-3*(4-8)/5
+```
+Assign values to a parameter:
+```{r}
+a<-7 
+a
+b=9
+b
+A<-a
+A
+# g
+```
+
+## NOTE! 
+### There are some restrictions on object naming:
+
+• May not contain "weird" symbols such as, +, -, #.
+• A period (.) And a hyphen (_) are allowed, as well as names beginning with a period (.)
+• A name cannot start with a number
+
+```{r}
+crystal.1<-6
+crystal.1
+mexico_dsde<-"SUPER"
+mexico_dsde
+# 2.crystal<-12 # comment 
+# crystal-2
+# crystal
+#  ana crystal<-3
+# crystal_3
+```
+
+#### scan()
+The scan () function makes it possible to insert some data in R:
+
+```{r}
+#crystal<-scan()
+# crystal
+```
+
+### VECTORS
+A vector in R can be declared in several ways. 
+You can use: 1) <- or 2) =, and immediately after it c ().
+Try writing:
+```{r}
+a=c(3,4,5,6,3)
+a
+ba<-c(3,7,5,6,13)   
+ba
+t(a)
+t(ba)
+t(t(a))
+a+3
+a-1
+a/5
+a*8
+```
+Arithmetic calculations with vectors:
+```{r}
+a+ba
+a-ba
+a/ba
+a*ba
+length(a)
+length(ba)
+D<-c(3,4,6)
+a+D
+```
+#### Minimum and Maximum
+In R, we can find the minimum or maximum element of a vector using the commands min () or max ():
+```{r}
+min(a)
+max(ba)
+min(a,ba)
+max(a,ba)
+f<-c(min(a),min(ba))
+f
+# How can you do it for max()
+```
+Parallel minima and maxima: pmin() and pmax() finds the minimum (max) value in the same position
+```{r}
+w<-c(2,4,3,2,1)
+u<-c(8,5,3,2,5)
+s<-c(0,3,6,81,23)
+pmin(w,u,s)
+pmax(w,u,s)
+# Try to add an element to vectors and re-call the functions, what you observe?
+```
+#### Sort and Order
+sort () and order ()
+The sort () function makes it possible to sort the elements of a numeric vector from the smallest value to the largest value:
+```{r}
+sort(a)
+sort(ba)
+```
+The order () function makes it possible to sort the values of a vector but careful , displays their positions:
+```{r}
+a
+order(a)
+ba
+order(ba)
+```
+#### Different length of vectors
+What happens in R if the vectors have different lengths?
+```{r}
+d=c(1,2,3,4,2,3,1,0)
+e<-c(3,4,5,6,3)
+d+e
+d-e
+d/e
+e*d
+```
+### DESCRIPTIVE STATISTICS
+```{r}
+length(a)
+sum(a)# sum
+mean(a)# arithmetic mean
+mean(a,trim=1)# trim mean
+var(a)# variance
+sd(a)# standard deviation
+range(a)# range
+quantile(a)# quantiles
+IQR<-c(quantile(a,0.25),quantile(a,0.75))# inter quartile range 
+fivenum(a)# fivenum
+library(moments)
+skewness(a)
+kurtosis(a)
+```
+EXERCISE: Write in R some commands that make it possible to calculate the dispersion of a vector with discrete data.
+##### Missing data
+```{r}
+x=c(5,7,4,1,2,8,9,6,3,2,9,NA,4,5,3,NA, 4, 68, NA,32)
+mean(x)
+mean(x,na.rm=TRUE)
+```
+Can we change values to the elements of a vector? Of course yes!
+```{r}
+x
+x[3]=0
+x
+x[c(1,5)]=0
+x
+x[4]=mean(x)
+# elements in sequence from position 1 to 4 ?
+# vector x by removing element in position 5
+x2<-x[-5]
+x2
+# remove elements in position 3,7,8
+# x[c(-,-,-)]
+# a shorter vector from x
+x3<-x[3:8]
+x3
+index<-c(3,6,7)
+x[index]=NA
+x
+sum(a<5)
+sum(a[a<5])
+sum(a*(a<5))
+#you have same results. Why? Let us go step by step.
+a<5
+1*(a<5)
+a*(a<5)  
+sum(a*(a<5) )
+```
+#### EXERCISE
+Find the mean of all elements in vector a smaller than 2?
+```{r}
+mean(a<2)
+```
+#### EXERCISE
+What do the following commands display in R editor? Describe in words the result.
+```{r}
+c=sum(a,a<5) 
+c
+d=sum(a,a<2)
+d
+sum(b>3|b<6)
+sum(b>3 & b<6)
+```
+#### Operator = = 
+This operator "==" tests all elements of the vector if they are equal to the declared value. R responds with a vector with TRUE or FALSE values in the controlled positions.
+```{r}
+x=c(5,7,4,1,2,8,9,6,3,2,9,NA,4,5,3,NA, 4, 68, NA, 32)
+x==3
+is.na(x)# gives TRUE or FALSE for each element of vector x
+which(x==68)
+# what about: which(x==max(x)) consider to remove the NA values
+which(is.na(x))# gives the position of NAs in vector x
+```
+#### Match 
+Match function - order is important.
+Where do the values in the second vector appear in the first vector?’
+```{r}
+d=c(1,2,3,4,2,3,1,0)
+e<-c(3,4,5,6,3)
+match(d,e)
+match(e,d)
+# note that it shows the first position where the value is observed
+```
+#### Absolute value
+The function of finding the absolute value of a number in R is abs ():
+```{r}
+yy=c(-1,2,-3,1,-4,5,3,55)
+abs(yy)
+# combining functions!
+which(abs(yy-2)==min(abs(yy-2)))
+all(yy>0) # are all elements in yy greater than 0?
+any(yy>0) # is any element in yy greater than 0?
+```
+### SEQUENCE
+If we have two given values (g <f or f <g) and we want to create a vector of values from g to f or from f to g, moving by 1 unit then we use the symbol:
+The function seq () gives a range of values according to some conditions e.g.
+```{r}
+e1=19
+e2=1
+seq(e1,e2)
+seq(e1,e2,-1)
+# seq(e1,e2,2)# put a minus before 2
+seq(2,13,3)
+seq(13,2)#? correct it
+i=1:15
+i
+j=i:(i+1)
+j
+```
+#### EXERCISE
+Construct a sequence of an arithmetic progression with d=4, 20 values , starting from 0.
+#### TABLE -function
+Helps organize the observation in a frequency table.
+```{r}
+table(x)
+table(x)/length(x)
+# what if we want it in %?
+table(x)*100/length(x)
+```
+#### Categorical variable 
+```{r}
+var<-c("yes","no")
+v2<-c("y","n","n","n","y","n") # table it
+table(v2)/length(v2)
+crystal<-c("ana","eralda","daniel","data science")
+crystal
+length(crystal)
+nchar(crystal)
+sum(nchar(crystal))
+paste(var,crystal,sep=" ")
+```
+#### Extract in strings
+Extracting parts of strings
+```{r}
+phrase<-"the student of data science course are fantastic"
+q<-character(sum(nchar(phrase)))
+for (i in 1:sum(nchar(phrase))) q[i]<- substr(phrase,1,i)
+q
+strsplit(phrase,split=character(0))
+```
+#### Factors
+Qualitative data are often used to classify data at different levels or factors (modalities). To create a factor (modality) in R is simple with the command factor or as.factor. See the following example:
+```{r}
+v2
+factor(v2)
+table(factor(v2))
+is.numeric(x) 
+v3<-"crystal"
+class(v3) 
+is.character(a) 
+v4<-"system"
+paste(v3,v4)
+paste(v3,v4,sep="")
+substr(v3,2,5)
+```
+#### Sequence 
+We can use the function seq () to count deciles:
+```{r}
+decile<-seq(0,1,0.1)
+Decile=quantile(yy,decile)
+Decile
+```
+#### Repeat
+• The rep () function repeats a parameter, value, value vector several times, for example:
+```{r}
+rep("A",10)
+rep(x,each=3)
+rep(2:5,c(4,1,4,2))# repeat each element with the given frequency
+```
+#### Sort
+• The sort () function sorts the values of the numeric vector, for example:
+```{r}
+sort(x)
+(sort(x))^(-1) 
+# let's combine functions!
+rev(sort(x))
+rev(sort(x))[1:3]
+sum(rev(sort(x))[1:3])
+```
+#### Round
+The function that allows a rounding to R is: round ().
+```{r}
+round(1.34)
+round(1.345,2)
+```
+#### Sampling in R
+```{r}
+sample(1:50,6) 
+sample(1:50,6)
+sample(1:50,26,replace=TRUE)
+sample(c("H","T"),15,replace=TRUE)# coin toss
+sample(c("H","T"),15,replace=TRUE,prob=c(0.7,0.3))
+```
+
+#### EXERCISE 1
+Simulate the roll of a dice 20 times.
+
+#### EXERCISE 2
+For the following data, calculate: arithmetic mean, mean, maximum value, minimum value, amplitude, mean square deviation, quantiles.
+45, 43, 46, 48, 51, 46, 50, 47, 46, 45,54,76,13,89,8,
+
+#### EXERCISE 3
+The following values are given:
+653 656 659 662 664 668 671 674, 564, 783, 943, 350, 567, 876
+Write these numbers in R. Use the diff () function in the data. What do you get?
+Try: diff(diff())?
+
+#### EXERCISE 4
+Suppose you work for 10 days and your working hours are below:
+   17 16 20 24 22 15 21 15 17 22
+a) Construct a vector with the data in R.
+b) Find the maximum number of working hours.
+c) Which day has been the most tiring, so that has lasted the longest for you?
+d) On average, how many working hours have you had these 10 days? On which day did you work the least?
+e) Value 24 was incorrect. It should have been 18. How would you fix this? Once you have adjusted find the new average.
+f) How many times was your working time 20 hours or more? To answer this question try: sum (vector> = 20)
+(if you called the working hours vector "vector") What do you get? What percentage of the days did you work less than 17 hours? 
+
+
+#### MATRIX
+Union and intersect of two sets A and B
+```{r}
+A=c(1,4,2,1,2,7)
+B=c(1,3,5,6,1,2,8,4)
+union(A,B)
+intersect(A,B)
+```
+
+#### setdiff() and setequal()
+```{r}
+setdiff(A,B) # elements of A which are not in B
+setdiff(B,A) #elements of B which are not in A
+setequal(A,B) # TRUE if the sets are equal 
+```
+#### %in% 
+controles if a set X is in Y, returns TRUE or FALSE for elements in Y which are or not in X (pay attention to the order)
+```{r}
+X<-1:12
+Y<-5:9
+Y %in% X
+X %in% Y
+all(X%in%Y)# if we want to test all elements of X if they are in Y
+```
+#### Names of rows and columns in a matrix
+```{r}
+M<-matrix(c(1,0,4,0,1,0,7,9,1),nrow=3)
+M
+rownames(M)<-c("A","B","C")
+M
+colnames(M)<-colnames(M,do.NULL=FALSE,prefix="Var.")
+M
+```
+Or, we can use dimnames argument :
+```{r}
+D<-matrix(c(1,2,3,11,12,13), nrow=2, ncol=3, byrow=TRUE, dimnames=list(c("row 1", "row 2"), c("Col 1", "Col 2", "Col 3")))
+D
+```
+
+##### Abbreviations
+Also we can name the rows and columns by letters or month name or abbreviations for months:
+```{r}
+rownames(D)=LETTERS[1:2]
+D
+colnames(D)=letters[1:3]
+D
+colnames(D)=month.name[1:3]
+D
+colnames(D)=month.abb[1:3]
+D
+```
+
+#### Matrix Dimenssions
+We can obtain the number of rows and columns using:
+```{r}
+nrow(D)
+ncol(D)
+dim(D)
+```
+#### Grouping in Matrix
+##### Exercise
+Let suppose each row is an individual (item, observation)
+```{r}
+M1<-matrix(c(1,0,4,0,1,0,7,9,1,4,6,2),nrow=4)
+group=c("G1","G2","G2","G1")
+rowsum(M1, group)
+M1
+tapply(M1, list(group[row(M1)], col(M1)), sum)
+M1
+aggregate(M1,list(group),sum)
+M1
+cols<-apply(M1,2,mean)# apply to the columns the mean
+M1
+```
+##### cbind and rbind
+Add rows or columns using cbind and rbind
+```{r}
+M2<-matrix(c(1,0,4,0,1,0,7,9,1,4,6,2,5,0,7,8),nrow=4)
+M2
+M2<-rbind(M2,apply(M2,2,mean))# apply to the column the mean
+M2<-cbind(M2,apply(M2,1,var))# apply to the row the variance
+colnames(M2)<-c(1:4,"variance")
+rownames(M2)<-c(1:4,"mean")
+M2
+```
+#### Matrix multiplications
+```{r}
+M2<-matrix(c(1,0,4,0,1,0,7,9,1,4,6,2,5,0,7,8),nrow=4)
+M2%*%M2	# M2^2 quadratic matrix of M2
+```
+#### Solving linear equations
+```{r}
+ solve(M2)# gives the inverse of matrix M2
+```
+#### Example
+let supose we have the equations: 4x+5y=1 and 6x+7y=9 and we want to find the solutions x and y. 
+```{r}
+A<-matrix(c(4,5,6,7),nrow=2,byrow=TRUE)
+A
+b<-c(1,9)
+b
+solve(A,b)# the solution is x=19 and y=-15
+```
+#### Other helpful functions for matrices are:
+t(), det(), qr(), chol(), eigen(), prcomp(), diag(), array(), outer()
+```{r}
+M2<-matrix(c(1,0,4,0,1,0,7,9,1,4,6,2,5,0,7,8),nrow=4)
+M2
+diag(M2)# the diagonal of M2
+det(M2)# the determinant of matrix M2
+t(M2)# the transpose of M2
+```
+### More computations with matrices
+```{r}
+library(dplyr)
+library( miscTools)
+```
+
+```{r}
+x <- matrix(rnorm(20), nrow = 5, ncol = 4)
+print(x)
+```
+### Row averages
+```{r}
+print(rowMeans(x))
+print(rowMedians(x))
+```
+### Column averages
+```{r}
+print(colMeans(x))
+print(colMedians(x))
+```
+### Row variabilities
+```{r}
+library(matrixStats)
+print(rowVars(x))
+print(rowSds(x))
+print(rowMads(x))
+print(rowIQRs(x))
+```
+### Column variabilities
+```{r}
+print(rowVars(x))
+print(colSds(x))
+print(colMads(x))
+print(colIQRs(x))
+```
+### Row ranges
+```{r}
+print(rowRanges(x))
+print(cbind(rowMins(x), rowMaxs(x)))
+print(cbind(rowOrderStats(x, which = 1), rowOrderStats(x, which = ncol(x))))
+```
+### Column ranges
+```{r}
+print(colRanges(x))
+print(cbind(colMins(x), colMaxs(x)))
+print(cbind(colOrderStats(x, which = 1), colOrderStats(x, which = nrow(x))))
+```
+
+```{r}
+x <- matrix(rnorm(2400), nrow = 50, ncol = 40)
+```
+### Row standard deviations
+```{r}
+d <- rowDiffs(x)
+s1 <- rowSds(d) / sqrt(2)
+s2 <- rowSds(x)
+print(summary(s1 - s2))
+```
+### Column standard deviations
+```{r}
+d <- colDiffs(x)
+s1 <- colSds(d) / sqrt(2)
+s2 <- colSds(x)
+print(summary(s1 - s2))
+```
+
+## DATAFRAME
+How to create a data frame? 
+We can use the function data.frame(). If we have two variables let's suppose age and high of some individuals then we can create a dataframe with this two vectors using the function as below. Pay attention to the fact that the vectors should have the same length. NA-s are considered missing values but are counted as missing observations. We can use function na.omit() or the argument na.rm=TRUE inside a function to deal with missing values. 
+Below are examples of some functions used in dataframe-s: 
+
+-> subset() will create a subset of a given dataframe
+-> transform()  will add a variable to the dataframe
+-> split()  will split the variables from the dataframe
+
+```{r}
+age=c(60,62,57,72,66,20,45, 89, 67,45 )
+height=c(170,166,158,180,165,145,165,157,190,187)
+i<-seq(1,10)
+df=data.frame(age,height)
+df
+df$age
+df$height
+df$i
+df$age[height<=170]
+height<=170 # attention to the brackets
+df$height[df$age<=65 & df$age>60]
+df.1=subset(df,df$age<70)# create a subset of df of those individuals age <70
+df.2=transform(df,log.age=log(df$age))# add a column with log(age)
+df.2
+# edit(df.2)# edit the dataframe
+df.s=split(df$age,df$height)
+df.s
+lapply(df,mean)
+sapply(df,mean)
+lapply(df,var)
+sapply(df,median)
+lapply(df,log)
+sapply(df,exp)
+str(df)# structure of the dataframe
+name=c("Ana","Ben","Silva","Etta","Tim","Noah","Emia","Eino","Emanuel","Christina")
+names(age)<-name
+age
+```
+
+
+## Appendix
+### ARRAYS
+```{r}
+A<-letters[1:24]# 24 letters of the alphabet
+dim(A)=c(3,2,4)# create an array with matrices 3x2, and 4 matrices (6x4=24)
+A
+A[,,1:3]# select all the letters from a to r
+```
+##### LISTS
+```{r}
+crystal_list=list(Name="Ana" , Salary=1000 , City="Bucurest")
+typeof(crystal_list)
+length(crystal_list)
+names(crystal_list)
+unlist(crystal_list)
+crystal_list[3]
+crystal_list[[1]]# information about 1st variable
+crystal_list$Name
+crystal_list[1:2]
+crystal_list$Age=25
+crystal_list
+crystal_list=list(Name=c("Ana","Ben"), Salary=c(1200,5600), City=c("Bucurest", "Tirana"))
+summary(crystal_list)
+summary(crystal_list$Salary)
+crystal_list.1=list(Gender=c("F","M"),Profession=c("student","Data Scientist"))  
+crystal_final=list(crystal_list,crystal_list.1)# create a new list with additional information from another list of same individuals
+```
+
+
+
+End!
+
+Now is your turn to try your exercise!
